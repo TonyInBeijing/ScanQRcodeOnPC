@@ -5,6 +5,7 @@
 /.eslintcache
 /.pnp
 .pnp.js
+!/node_modules/qr-code-scanner
 
 # testing
 /coverage
