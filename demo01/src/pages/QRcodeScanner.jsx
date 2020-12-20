@@ -7,6 +7,8 @@ export default class QRcodeScanner extends Component {
         super(props);
         this.state = {
             modalShow: false,
+            scanFlag: false,
+            scanResult: '',
         }
         this.initScanner = this.initScanner.bind(this);
     }
@@ -15,10 +17,11 @@ export default class QRcodeScanner extends Component {
     initScanner() {
         this.setState({ modalShow: true }, () => {
             QRScanner.initiate({
-                onResult: result => { console.log(result); },
+                onResult: result => { this.setState({ scanFlag: true, scanResult: result }) },
                 onError: err => { console.log(err) },
                 timeout: 100000,
                 className: 'video-container',
+                lockLayerClassName: 'lock-layer',
                 parent: document.getElementById('scanner-container'),
             });
         });
@@ -26,16 +29,29 @@ export default class QRcodeScanner extends Component {
     render() {
         return (
             <div>
-                <Button type="primary" size="large" onClick={this.initScanner}>开始扫码</Button>
+                <Button type="primary" size="large" onClick={this.initScanner}>Open Scanner</Button>
                 <Modal
-                    title="ScannerModal"
+                    title="User QRcode Scanner"
                     visible={this.state.modalShow}
-                    onCancel={() => { this.setState({ modalShow: false }) }}
-                    onOk={() => { this.setState({ modalShow: false }) }}
+                    okText="Check User Detail"
+                    cancelText="Cancel"
+                    onCancel={() => {
+                        this.setState({ modalShow: false, scanFlag: false }, () => {
+                            QRScanner.stop();
+                        })
+                    }}
+                    onOk={() => {
+                        this.setState({ modalShow: false, scanFlag: false }, () => {
+                            QRScanner.stop();
+                        })
+                    }}
                 >
                     <div id="scanner-container"></div>
+                    {
+                        this.state.scanFlag && this.state.scanResult !== '' ? (<span>Scan Result:::{this.state.scanResult}</span>) : null
+                    }
                 </Modal>
-            </div>
+            </div >
         )
     }
 }
