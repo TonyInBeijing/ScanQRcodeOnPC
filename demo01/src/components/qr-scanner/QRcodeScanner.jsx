@@ -27,6 +27,9 @@ export default class QRcodeScanner extends Component {
         });
     }
     render() {
+        const scanResultDOM = (
+            <div></div>
+        );
         return (
             <div>
                 <Button type="primary" size="large" onClick={this.initScanner}>Open Scanner</Button>
