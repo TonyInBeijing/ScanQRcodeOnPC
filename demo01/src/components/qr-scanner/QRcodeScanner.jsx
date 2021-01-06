@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import QRScanner from 'qr-code-scanner';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Card, Avatar } from 'antd';
 import './qrcode-scanner.css';
 export default class QRcodeScanner extends Component {
     constructor(props) {
@@ -17,7 +17,9 @@ export default class QRcodeScanner extends Component {
     initScanner() {
         this.setState({ modalShow: true }, () => {
             QRScanner.initiate({
-                onResult: result => { this.setState({ scanFlag: true, scanResult: result }) },
+                onResult: result => {
+                    this.setState({ scanFlag: true, scanResult: result });
+                },
                 onError: err => { console.log(err) },
                 timeout: 100000,
                 className: 'video-container',
@@ -28,16 +30,31 @@ export default class QRcodeScanner extends Component {
     }
     render() {
         const scanResultDOM = (
-            <div></div>
+            <div>
+                <Card
+                >
+                    <Card.Meta
+                        avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                        title="行走的钱袋子1号"
+                        description="请与客户确认扫描结果，确认无误后获取客户健康档案"
+                    />
+                </Card>,
+            </div>
         );
         return (
             <div>
-                <Button type="primary" size="large" onClick={this.initScanner}>Open Scanner</Button>
+                <Button
+                    type="primary"
+                    size="large"
+                    onClick={this.initScanner}
+                >
+                    让我试试～
+                    </Button>
                 <Modal
-                    title="User QRcode Scanner"
+                    title="访客到店"
                     visible={this.state.modalShow}
-                    okText="Check User Detail"
-                    cancelText="Cancel"
+                    okText="就他了！"
+                    cancelText="换一个！"
                     onCancel={() => {
                         this.setState({ modalShow: false, scanFlag: false }, () => {
                             QRScanner.stop();
@@ -46,12 +63,14 @@ export default class QRcodeScanner extends Component {
                     onOk={() => {
                         this.setState({ modalShow: false, scanFlag: false }, () => {
                             QRScanner.stop();
+                            // 通知父组件扫面结果
+                            this.props.onResult(this.state.scanResult);
                         })
                     }}
                 >
                     <div id="scanner-container"></div>
                     {
-                        this.state.scanFlag && this.state.scanResult !== '' ? (<span>Scan Result:::{this.state.scanResult}</span>) : null
+                        this.state.scanFlag && this.state.scanResult !== '' ? scanResultDOM : null
                     }
                 </Modal>
             </div >
