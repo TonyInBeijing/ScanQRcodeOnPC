@@ -55,9 +55,13 @@ export default class QRcodeScanner extends Component {
                     visible={this.state.modalShow}
                     okText="就他了！"
                     cancelText="换一个！"
+                    okButtonProps={{ disabled: this.state.scanFlag === false }}
+                    cancelButtonProps={{ disabled: this.state.scanFlag === false }}
                     onCancel={() => {
                         this.setState({ modalShow: false, scanFlag: false }, () => {
                             QRScanner.stop();
+                            // 通知父组件扫面结果
+                            this.props.onResult('');
                         })
                     }}
                     onOk={() => {
