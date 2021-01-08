@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Layout, Result, Button, Modal, Divider, Descriptions, List } from 'antd';
+import { Layout, Result, Button, Modal, Divider, Descriptions, List, Input } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import QRcodeScanner from '../../components/qr-scanner/QRcodeScanner';
 import SiderPage from './SiderPage';
@@ -9,8 +9,6 @@ export default class HomePage extends Component {
         super(props);
         this.state = {
             scanResult: '',
-            // 访客记录
-            userRecordListShow: false,
             // 记录内容
             setRecordListShow: false,
         };
@@ -54,7 +52,7 @@ export default class HomePage extends Component {
                                                     title="访客登记成功，准备开始整活～"
                                                     subTitle=""
                                                     extra={
-                                                        <Button type="primary" key="primary">
+                                                        <Button type="primary" key="primary" onClick={() => { this.setState({ setRecordListShow: true }); }}>
                                                             记录本次服务内容
                                                     </Button>
                                                     }
@@ -85,7 +83,7 @@ export default class HomePage extends Component {
                                                                 date: '2020-12-10 09:00:00'
                                                             },
                                                             {
-                                                                title: '魏大夫又给安排了一波五脏鸠，爽歪歪',
+                                                                title: '魏大夫又给安排了一波五脏灸，爽歪歪',
                                                                 date: '2020-12-20 09:00:00',
                                                             },
                                                             {
@@ -110,7 +108,12 @@ export default class HomePage extends Component {
                                 {/* 本次服务内容 */}
                                 <Modal
                                     visible={this.state.setRecordListShow}
-                                ></Modal>
+                                    title="访客记录"
+                                    onOk={() => { this.setState({ setRecordListShow: false }); }}
+                                    onCancel={() => { this.setState({ setRecordListShow: false }); }}
+                                >
+                                    <Input.TextArea placeholder="输入访客本次做的项目" rows={5}></Input.TextArea>
+                                </Modal>
                             </Content>
                         </Layout>
                     </Layout>
