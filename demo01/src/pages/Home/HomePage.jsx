@@ -37,7 +37,7 @@ export default class HomePage extends Component {
                                 }}
                             >
                                 {
-                                    this.state.scanResult !== '' ?
+                                    this.state.scanResult == '' ?
                                         (
                                             <Result
                                                 icon={<SmileOutlined />}
