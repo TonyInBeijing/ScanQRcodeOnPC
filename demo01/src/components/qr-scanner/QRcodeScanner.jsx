@@ -1,3 +1,12 @@
+/*
+ * @Author: TonyInBeijing
+ * @Date: 2022-03-27 10:46:06
+ * @LastEditors: TonyInBeijing
+ * @LastEditTime: 2022-03-27 13:27:51
+ * @FilePath: /ScanQRcodeOnPC/demo01/src/components/qr-scanner/QRcodeScanner.jsx
+ * @Description: 
+ * 
+ */
 import React, { Component } from 'react'
 import QRScanner from 'qr-code-scanner';
 import { Button, Modal, Card, Avatar } from 'antd';
@@ -35,7 +44,7 @@ export default class QRcodeScanner extends Component {
                 >
                     <Card.Meta
                         avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                        title="行走的钱袋子1号"
+                        title="测试客户1"
                         description="请与客户确认扫描结果，确认无误后获取客户健康档案"
                     />
                 </Card>,
@@ -48,13 +57,13 @@ export default class QRcodeScanner extends Component {
                     size="large"
                     onClick={this.initScanner}
                 >
-                    让我试试～
+                    扫码登记
                     </Button>
                 <Modal
-                    title="访客到店"
+                    title="客户到店"
                     visible={this.state.modalShow}
-                    okText="就他了！"
-                    cancelText="换一个！"
+                    okText="确定"
+                    cancelText="取消"
                     okButtonProps={{ disabled: this.state.scanFlag === false }}
                     cancelButtonProps={{ disabled: this.state.scanFlag === false }}
                     onCancel={() => {
